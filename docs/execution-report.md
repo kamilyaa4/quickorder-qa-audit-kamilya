@@ -1,12 +1,12 @@
 # Rapport d'exécution de la campagne
 
 ## Environnement
-- Date et heure : à renseigner
+- Date et heure : 13/10/2026
 - Testeur : Kamilya
-- Système d'exploitation : à renseigner
-- Navigateur et version : à renseigner
+- Système d'exploitation : Windows
+- Navigateur et version : Docker 27.3.1, Compose v2.30.3
 - Version/commit du dépôt source : à renseigner
-- Méthode de lancement (Python ou Docker) : à renseigner
+- Méthode de lancement (Python ou Docker) : docker compose up --build
 - URL : http://127.0.0.1:5000
 - Swagger : http://127.0.0.1:5000/docs/
 
