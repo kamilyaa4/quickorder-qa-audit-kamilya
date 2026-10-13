@@ -1,6 +1,6 @@
 # BR-CAND-08 — Recherche d'accueil pouvant ignorer la description du restaurant
 
-- **Statut :** Candidat à reproduire — non confirmé.
+- **Statut :** Candidat à reproduire — confirmé.
 - **Source à inspecter :** `app/routes/main.py`
 - **Préconditions :** Terme présent dans la description mais absent du nom d'un restaurant.
 - **Étapes de reproduction :** 1. Rechercher le terme. 2. Vérifier si le restaurant apparaît.
