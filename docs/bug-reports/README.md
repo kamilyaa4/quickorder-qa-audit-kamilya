@@ -13,13 +13,13 @@ Les huit pistes sont issues de commentaires présents dans le code source public
 - Sévérité/priorité : à confirmer.
 
 ## BR-CAND-02 — Produit avec stock nul potentiellement visible et ajoutable
-- Statut : À reproduire.
+- Statut : Confirmé.
 - Source : app/routes/main.py et app/routes/shop.py.
 - Préconditions : produit stock 0 et disponible dans les données de test.
 - Étapes : ouvrir le restaurant, chercher le produit, tenter de l'ajouter au panier.
 - Attendu : produit en rupture non commandable.
-- Observé : à renseigner. Preuve : menu, panier et stock avant/après.
-- Sévérité/priorité : à confirmer.
+- Observé : un produit en rupture de stock peut être ajouté au panier (TC-L-02 et TC-BR-02. Preuve : test7.png.
+- Sévérité/priorité : Majeure, P1 (le stock ne doit pas être contournable).
 
 ## BR-CAND-03 — Quantité du panier non plafonnée au stock
 - Statut : À reproduire.
@@ -40,22 +40,22 @@ Les huit pistes sont issues de commentaires présents dans le code source public
 - Sévérité/priorité : potentiellement critique si reproduit.
 
 ## BR-CAND-05 — Minimum de commande potentiellement non appliqué au checkout
-- Statut : À reproduire.
+- Statut : Confirmé.
 - Source : app/routes/orders.py.
 - Préconditions : minimum supérieur au sous-total.
 - Étapes : composer un panier inférieur au minimum, ouvrir checkout et tenter de confirmer.
 - Attendu : confirmation bloquée et minimum expliqué.
-- Observé : à renseigner. Preuve : checkout et résultat de commande.
-- Sévérité/priorité : à confirmer.
+- Observé :le minimum de commande est de 25 euros, mais une commande à 6,49 euros a pu être passée (TC-BR-05). Preuve : test17.png.
+- Sévérité/priorité : Majeure, P1 (règle métier non appliquée)..
 
 ## BR-CAND-06 — Paiement espèces potentiellement accepté si montant insuffisant
-- Statut : À reproduire.
+- Statut : Confirmé.
 - Source : app/routes/orders.py.
 - Préconditions : panier valide et paiement espèces disponible.
 - Étapes : relever le total, saisir un montant reçu inférieur, confirmer et vérifier l'état de la commande.
 - Attendu : commande non confirmée si montant insuffisant.
-- Observé : à renseigner. Preuve : formulaire et détail de commande.
-- Sévérité/priorité : potentiellement élevée si reproduit.
+- Observé : la commande est confirmée alors que le montant reçu en espèces est inférieur au total (TC-BR-06). Preuve : test18.png.
+- Sévérité/priorité : Majeure, P1 (incohérence de paiement).
 
 ## BR-CAND-07 — API susceptible d'ignorer le stock
 - Statut : À reproduire.
@@ -88,3 +88,39 @@ Les huit pistes sont issues de commentaires présents dans le code source public
 - Priorité : P1 / P2 / P3
 - Cas de test associé :
 - Correction et re-test :
+
+
+## Anomalies confirmées en plus des pistes
+
+## BR-09 — Le filtre par catégorie ne filtre pas
+
+- Statut : Confirmé.
+- Date et environnement : 13/10/2026, Windows, Docker, http://127.0.0.1:5000.
+- Étapes : ouvrir l'accueil, puis sélectionner une catégorie.
+- Attendu : seuls les restaurants de la catégorie apparaissent.
+- Observé : tous les restaurants restent affichés.
+- Preuve : test1.png.
+- Sévérité/priorité : Moyenne, P2.
+- Cas de test associé : TC-N-01.
+
+## BR-10 — L'API accepte une commande sans articles
+
+- Statut : Confirmé.
+- Date et environnement : 13/10/2026, Swagger, clé quickorder-demo-key.
+- Étapes : POST /orders avec un tableau items vide.
+- Attendu : l'API retourne 400 avec un message explicite.
+- Observé : l'API retourne 201.
+- Preuve : test12.png.
+- Sévérité/priorité : Majeure, P2.
+- Cas de test associé : TC-E-03.
+
+## BR-11 — Un produit d'un restaurant fermé peut être ajouté au panier
+
+- Statut : Confirmé.
+- Date et environnement : 13/10/2026, Windows, Docker, http://127.0.0.1:5000.
+- Étapes : ajouter un produit d'un restaurant fermé, puis tenter la commande.
+- Attendu : la commande est refusée quand le restaurant est fermé.
+- Observé : on peut ajouter un produit d'un restaurant fermé.
+- Preuve : test15.png.
+- Sévérité/priorité : Majeure, P2.
+- Cas de test associé : TC-BR-03.
