@@ -20,7 +20,7 @@ Projet du cours **Tests et qualité des solutions numériques**. L'objectif est 
 - [Guide de collecte des preuves](evidence/README.md)
 
 ## État d'avancement
-Les livrables de préparation sont déposés. La campagne d'exécution, les preuves, les anomalies confirmées et les retours utilisateurs restent à collecter après lancement de l'application. Aucun résultat de test ni témoignage n'est inventé. Les pistes de bugs identifiées par inspection du code doivent être reproduites avant d'être déclarées confirmées.
+La campagne d'exécution a été réalisée le 13/10/2026 : 24 cas prévus, 12 Pass, 7 Fail, 1 Blocked, 4 Skipped. Les preuves sont dans le dossier evidence et les anomalies confirmées dans docs/bug-reports. Recommandation actuelle : No-Go (voir docs/execution-report.md). Restent à finaliser : les retours utilisateurs et le re-test des cas non exécutés.
 
 ## Lancer l'application
 Suivre le guide officiel d'installation ci-dessus. Après démarrage, vérifier l'accueil et Swagger. La clé API de démonstration indiquée dans le sujet est `quickorder-demo-key`.
