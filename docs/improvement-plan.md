@@ -2,23 +2,18 @@
 
 Ces pistes sont issues du périmètre métier et de la lecture du code source. Elles doivent être validées par les tests avant d'être présentées comme corrections de bugs confirmés.
 
-| ID | Amélioration | Justification / risque | Priorité initiale | Validation |
-|---|---|---|---|---|
-| IMP-01 | Vérifier le stock côté serveur à l'ajout, modification panier et checkout | Éviter commandes impossibles et stock négatif | P1 très haute | Tests stock nul et quantité supérieure au stock |
-| IMP-02 | Rendre la création de commande idempotente | Éviter les doublons et double décrémentation | P1 très haute | Une seule commande pour une confirmation |
-| IMP-03 | Refuser un paiement espèces inférieur au total | Cohérence du paiement simulé | P1 très haute | Montant insuffisant refusé, montant suffisant traité |
-| IMP-04 | Appliquer minimum de commande et état ouvert du restaurant côté serveur | Appliquer les règles métier sur UI et API | P1 très haute | Checkout et API refusent les commandes non éligibles |
-| IMP-05 | Vérifier les filtres de livraison et la recherche | Éviter des résultats trompeurs | P2 haute | Jeux de données contrôlés et résultats comparés |
-| IMP-06 | Centraliser les validations métier partagées entre UI et API | Réduire les divergences et contournements | P2 haute | Mêmes règles sur interface et API |
-| IMP-07 | Ajouter des tests de régression automatisés pour les parcours critiques | Détecter les régressions après correction | P2 haute | Tests sur panier, stock, checkout, coupon, autorisations |
-| IMP-08 | Améliorer les messages de validation | Aider l'utilisateur à corriger une saisie | P3 moyenne | Scénarios utilisateurs et messages explicites |
+## Améliorations proposées
 
-## Mise en œuvre
-1. Confirmer l'anomalie et son impact.
-2. Corriger une anomalie à la fois dans une branche séparée si cela est autorisé.
-3. Ajouter ou adapter un test de régression.
-4. Rejouer les tests nominaux et négatifs concernés.
-5. Consigner commit, résultat et preuve.
-6. Réviser la priorité selon les observations.
+| Priorité | Problème constaté | Amélioration proposée | Anomalie liée |
+| -------- | ----------------- | --------------------- | ------------- |
+| P1 | Un produit en rupture peut être ajouté au panier | Bloquer l'ajout quand le stock est à 0 et vérifier le stock à la confirmation de commande | BR-CAND-02 |
+| P1 | Une commande passe sous le minimum de commande | Vérifier le minimum côté serveur avant de confirmer la commande | BR-CAND-05 |
+| P1 | Une commande est confirmée avec un montant en espèces insuffisant | Refuser la confirmation tant que le montant reçu est inférieur au total | BR-CAND-06 |
+| P2 | L'API accepte une commande sans articles (201) | Valider le corps de la requête et renvoyer 400 avec un message explicite | BR-10 |
+| P2 | Un produit d'un restaurant fermé peut être ajouté au panier | Vérifier l'ouverture du restaurant avant l'ajout et à la commande | BR-11 |
+| P2 | Le filtre par catégorie ne filtre pas | Corriger la requête de filtre sur la page d'accueil | BR-09 |
 
+## Re-test après correction
+
+Après chaque correction, rejouer le cas associé (TC-L-02, TC-BR-02, TC-BR-05, TC-BR-06, TC-E-03, TC-BR-03, TC-N-01), puis les cas de régression (TC-N-04, TC-N-05, TC-BR-04), et noter le résultat et la preuve.
 Ce dépôt documente l'audit QA ; ne pas modifier le code source initial pendant la campagne initiale.
